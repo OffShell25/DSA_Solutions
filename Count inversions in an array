@@ -1,0 +1,62 @@
+class Solution {
+    // 1. Declare a class-level variable to keep a running total
+    long long int inversions = 0;
+    // This is EXACTLY your merge sort code
+    vector<int> mergeSort(vector<int> nums) {
+        vector<int> v1;
+        if(nums.size() <= 1){
+            return nums;
+        }
+    
+        for(int i = 0; i < (nums.size()) / 2; i++){
+            v1.push_back(nums[i]);
+        }
+        
+        vector<int> v2;
+        for(int j = (nums.size()) / 2; j <= nums.size() - 1; j++){
+            v2.push_back(nums[j]);
+        }
+    
+        v1 = mergeSort(v1);
+        v2 = mergeSort(v2);
+        
+        vector<int> temp;
+        int i = 0;
+        int j = 0;
+        
+        while(i < v1.size() && j < v2.size()){
+            if(v1[i] > v2[j]){
+                temp.push_back(v2[j]);
+                
+                // 2. THE MAGIC MATH:
+                // Because v1 is sorted, if v1[i] is greater than v2[j], 
+                // then EVERYTHING left in v1 is also greater than v2[j].
+                // How many elements are left in v1? Exactly (v1.size() - i).
+                inversions += (v1.size() - i); 
+                
+                j++;
+            }else{
+                temp.push_back(v1[i]);
+                i++;
+            }
+        }
+        
+        while(i < v1.size()){
+            temp.push_back(v1[i]);
+            i++;
+        }
+        while(j < v2.size()){
+            temp.push_back(v2[j]);
+            j++;
+        }
+        
+        return temp; // Return the sorted array, just like you designed!
+    }
+public:
+    // This is the function LeetCode actually calls
+    long long int numberOfInversions(vector<int>& nums) {
+        inversions = 0; // Reset the count to 0 for each new test case
+        mergeSort(nums); // Run your sorting algorithm
+        return inversions; // Return the background total
+    }
+};
