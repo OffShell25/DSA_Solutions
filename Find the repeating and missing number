@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> findMissingRepeatingNumbers(vector<int> nums) {
+        int n = nums.size();
+        int sum = (n*(n+1))/2;
+        int sum_act = accumulate(nums.begin(),nums.end(),0);
+        int potent_A = INT_MIN;
+        sort(nums.begin(),nums.end());
+        for(int i = 0 ; i<n; i++){
+            if(nums[i]==potent_A){
+                return {potent_A,sum-sum_act+potent_A};
+            }else{
+                potent_A = nums[i];
+            }
+
+        }
+        return {};
+    }
+};
