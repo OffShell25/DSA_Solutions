@@ -1,0 +1,43 @@
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    int n, m, k;
+
+    cin >> n >> m >> k;
+
+    vector<int> applicants(n);
+    vector<int> apartments(m);
+
+    // Read desired apartment sizes
+    for (int i = 0; i < n; i++) {
+        cin >> applicants[i];
+    }
+
+    // Read apartment sizes
+    for (int i = 0; i < m; i++) {
+        cin >> apartments[i];
+    }
+    sort(applicants.begin(),applicants.end());
+    sort(apartments.begin(),apartments.end());
+    int i=0,j=0,count=0;
+
+    while(i<n && j<m){
+        if(applicants[i]-k>apartments[j]){
+            j++;
+        }else if(applicants[i]+k<apartments[j]){
+            i++;            
+        }else{
+            count+=1;
+            i++;
+            j++;
+        }
+    }
+        cout<<count<<endl;
+    
+
+    return 0;
+}
